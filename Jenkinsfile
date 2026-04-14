@@ -22,9 +22,19 @@ pipeline {
                 sh 'mvn test'
             }
         }
+        stage('package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
         stage('Code coverage') {
             steps {
                 sh 'mvn verify'
+            }
+        }
+        stage('s3 bucket storing') {
+            steps {
+                s3Upload acl: 'Private', bucket: 'kubebytes-amazone-s3-bucket', file: 'target/*.war'
             }
         }
     }
