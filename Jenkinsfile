@@ -17,6 +17,11 @@ pipeline {
                 sh 'mvn pmd:pmd'
             }
         }
+        stage('Unit test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
         
     }
 }
