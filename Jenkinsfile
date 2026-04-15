@@ -34,7 +34,8 @@ pipeline {
         }
          stage('S3 bucket storing') {
             steps {
-                s3Upload acl: 'Private', bucket: 'declarative1',  file: 'target/adressbook.war'
+               s3Upload(acl: 'Private', entries: [[bucket: 'declarative1', sourceFile: 'target/adressbook.war', selectedRegion: 'us-east-1']])
+
             }
         }
     }
