@@ -2,45 +2,58 @@ pipeline {
     agent any
 
     stages {
+
         stage('git checkout') {
             steps {
-                git credentialsId: 'git-credentials', url: 'https://github.com/samatha-ux/addressbook-v1.git'
+                git credentialsId: 'git-credentials', 
+                    url: 'https://github.com/samatha-ux/addressbook-v1.git'
             }
         }
-         stage('compilitation the code') {
+
+        stage('compilation the code') {
             steps {
-                sh 'mvn compile'
+                sh 'mvn clean compile'
             }
         }
-         stage('code review') {
+
+        stage('code review') {
             steps {
                 sh 'mvn pmd:pmd'
             }
         }
+
         stage('Unit test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('package') {
+
+        stage('Code Package') {
             steps {
                 sh 'mvn package'
             }
         }
+
         stage('Code coverage') {
             steps {
                 sh 'mvn verify'
             }
         }
-        stage('s3 bucket storing') {
+
+        stage('S3 bucket storing') {
             steps {
-                s3Upload acl: 'Private', bucket: 'declarative1', file: '/var/lib/jenkins/workspace/declarative pipeline job1/*.war'
-        }
-        stage('Deploy code to tomcat') {
-            steps {
-                sh 'sudo cp /var/lib/jenkins/workspace/declarative pipeline job1/target/*.war /home/ubuntu/tomcat/webapps/'
+                withAWS(credentials: 'aws-credentials-id', region: 'us-east-1') {
+                    s3Upload(
+                        bucket: 'declarative1',
+                        entries: [
+                            [
+                                sourceFile: 'target/*.war',
+                                accessControlList: 'Private'
+                            ]
+                        ]
+                    )
+                }
             }
         }
     }
-}
 }
