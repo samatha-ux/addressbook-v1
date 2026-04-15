@@ -44,10 +44,10 @@ pipeline {
             steps {
                 withAWS(credentials: 'aws-credentials-id', region: 'us-east-1') {
                     s3Upload(
-                        bucket: 'declarative1',
                         entries: [
                             [
                                 sourceFile: 'target/*.war',
+                                bucket: 'declarative1',
                                 accessControlList: 'Private'
                             ]
                         ]
