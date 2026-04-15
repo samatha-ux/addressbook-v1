@@ -17,24 +17,28 @@ pipeline {
                 sh 'mvn pmd:pmd'
             }
         }
-         stage('Unit test') {
+        stage('Unit test') {
             steps {
-                sh 'mvn test' 
+                sh 'mvn test'
             }
         }
-         stage('Code Package') {
+        stage('package') {
             steps {
                 sh 'mvn package'
             }
         }
-         stage('Code coverage') {
+        stage('Code coverage') {
             steps {
                 sh 'mvn verify'
-             }
+            }
         }
-         stage('S3 bucket storing') {
+        stage('s3 bucket storing') {
             steps {
-               s3Upload acl: 'Private',bucket: 'declarative1',file: 'target/*.war'
+                s3Upload acl: 'Private', bucket: 'declarative1', file: '/var/lib/jenkins/workspace/declarative pipeline job1/*.war'
+        }
+        stage('Deploy code to tomcat') {
+            steps {
+                sh 'sudo cp /var/lib/jenkins/workspace/declarative pipeline job1/target/*.war /home/ubuntu/tomcat/webapps/'
             }
         }
     }
