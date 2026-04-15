@@ -34,7 +34,7 @@ pipeline {
         }
          stage('S3 bucket storing') {
             steps {
-               s3Upload acl: 'Private', bucket: 'declarative1', file: 'target/*.war'
+               s3Upload acl: 'Private',bucket: 'declarative1',file: 'target/*.war'
             }
         }
     }
