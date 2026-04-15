@@ -12,5 +12,10 @@ pipeline {
                 sh 'mvn compile'
             }
         }
+         stage('code review') {
+            steps {
+                sh 'mvn pmd:pmd'
+            }
+        }
     }
 }
