@@ -19,7 +19,12 @@ pipeline {
         }
          stage('Unit test') {
             steps {
-                sh 'mvn test'                 
+                sh 'mvn test' 
+            }
+        }
+         stage('Code coverage') {
+            steps {
+                sh 'mvn verify'                 
             }
         }
     }
