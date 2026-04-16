@@ -35,7 +35,7 @@ pipeline {
         stage('s3 bucket storing') {
             steps {
                 s3Upload(
-                    bucket: 'samdevvishwa',
+                    bucket: 'declarative1',
                     file: 'target/addressbook.war',
                     acl: 'Private'
                 )
