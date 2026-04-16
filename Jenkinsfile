@@ -33,7 +33,7 @@ pipeline {
         }
         stage('s3 bucket storing') {
             steps {
-               s3Upload(profileName: 's3profile', consoleLogLevel: 'INFO', dontSetBuildResultOnFailure: false, dontWaitForConcurrentBuildCompletion: false, entries: [[bucket: 'samdevvishwa', selectedRegion: 'eu-north-1', sourceFile: 'target/addressbook.war']], pluginFailureResultConstraint: 'FAILURE', userMetadata: [])
+               s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', region: 'eu-north-1')
         }
     }
 }
