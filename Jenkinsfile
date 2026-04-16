@@ -1,47 +1,36 @@
 pipeline {
     agent any
-    
+
     stages {
-        stage('Compile') {
+        stage('git checkout') {
+            steps {
+                git credentialsId: 'adcbec07-694e-432f-a4d6-0592ad377cde', url: 'https://github.com/samatha-ux/addressbook-v1.git'
+            }
+        }
+         stage('compilitation the code') {
             steps {
                 sh 'mvn compile'
             }
         }
-        
-        stage('Code Review') {
+         stage('code review') {
             steps {
                 sh 'mvn pmd:pmd'
             }
         }
-        
-        stage('Unit Test') {
+        stage('Unit test') {
             steps {
                 sh 'mvn test'
             }
         }
-        
-        stage('Package') {
+        stage('package') {
             steps {
                 sh 'mvn package'
             }
         }
-        
-        stage('Code Coverage') {
+        stage('Code coverage') {
             steps {
                 sh 'mvn verify'
-            }
-        }
-
-        stage('S3 Upload') {
-            steps {
-                // Using the ID from your screenshot: 'my-aws-id'
-                withAWS(credentials: 'my-aws-id', region: 'us-east-1') {
-                    s3Upload(
-                        file: 'target/addressbook.war', 
-                        bucket: 'samdevvishwa', 
-                        path: 'addressbook.war'
-                    )
-                }
+       
             }
         }
     }
