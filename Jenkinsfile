@@ -38,11 +38,14 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-        
         stage('S3 Upload') {
-            steps {
-                // Requires 'Pipeline: AWS Steps' plugin
-                s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
+    steps {
+        // Using 'target/*.war' is safer if there are spaces in the parent folder names
+        s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
+    }
+}
+    }
+}
             }
         }
     } 
