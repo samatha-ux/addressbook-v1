@@ -1,42 +1,49 @@
 pipeline {
     agent any
+    
     stages {
-        stage('git checkout') {
+        stage('Git Checkout') {
             steps {
-                git credentialsId: 'git', url: 'https://github.com/samatha-ux/addressbook-v1.git'
+                git credentialsId: 'git', url: 'https://github.com'
             }
         }
-         stage('compilitation the code') {
+        
+        stage('Compile') {
             steps {
                 sh 'mvn compile'
             }
         }
-         stage('code review') {
+        
+        stage('Code Review') {
             steps {
                 sh 'mvn pmd:pmd'
             }
         }
-        stage('Unit test') {
+        
+        stage('Unit Test') {
             steps {
                 sh 'mvn test'
             }
         }
-        stage('package') {
+        
+        stage('Package') {
             steps {
                 sh 'mvn package'
             }
         }
-        stage('Code coverage') {
+        
+        stage('Code Coverage') {
             steps {
                 sh 'mvn verify'
-             }
+            }
         }
-        stage('s3 bucket storing') {
+        
+        stage('S3 Upload') {
             steps {
-              stage('Upload to S3') {
-    steps {
-       s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
+                // Ensure the 'Pipeline: AWS Steps' plugin is installed for s3Upload
+                // 'file' is the path to your artifact relative to the workspace
+                s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
+            }
         }
-    }
-}    
-}
+    } // Closes stages
+} // Closes pipeline
