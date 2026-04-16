@@ -32,10 +32,18 @@ pipeline {
                 sh 'mvn verify'  
             }
         }
-        stage('s3 bucket storage') {
+        stage('s3 bucket storing') {
             steps {
-                s3Upload acl: 'Private', bucket: 'samdevvishwa',  file: /var/lib/jenkins/workspace/Declarative pipeline job1/target
+                s3Upload(
+                    bucket: 'samdevvishwa',
+                    file: 'target/addressbook.war',
+                    acl: 'Private'
+                )
             }
         }
+       
+                
+        
+    
     }
 }
