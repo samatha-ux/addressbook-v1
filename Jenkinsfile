@@ -29,8 +29,12 @@ pipeline {
         }
         stage('Code coverage') {
             steps {
-                sh 'mvn verify'
-       
+                sh 'mvn verify'  
+            }
+        }
+        stage('s3 bucket storage') {
+            steps {
+                s3Upload acl: 'Private', bucket: 'samdevvishwa',  file: 'target/*.war'
             }
         }
     }
