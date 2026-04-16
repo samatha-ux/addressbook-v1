@@ -2,13 +2,6 @@ pipeline {
     agent any
     
     stages {
-        stage('Checkout') {
-            steps {
-                // Correct syntax to clone your repository
-                git url: 'https://github.com/samatha-ux/addressbook-v1.git', branch: 'master'
-            }
-        }
-        
         stage('Compile') {
             steps {
                 sh 'mvn compile'
@@ -41,7 +34,7 @@ pipeline {
 
         stage('S3 Upload') {
             steps {
-                // Replace 'your-aws-credentials-id' with your actual Jenkins Credentials ID
+                // Using the ID from your screenshot: 'my-aws-id'
                 withAWS(credentials: 'my-aws-id', region: 'us-east-1') {
                     s3Upload(
                         file: 'target/addressbook.war', 
