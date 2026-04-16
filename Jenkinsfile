@@ -32,6 +32,14 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-
+        stage('s3 bucket storing') {
+            steps {
+                s3Upload(
+                    bucket: 'declarative1',
+                    file: 'target/addressbook.war',
+                    acl: 'Private'
+                )
+            }
+        }
     }
 }
