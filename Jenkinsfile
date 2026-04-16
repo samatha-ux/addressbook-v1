@@ -33,7 +33,7 @@ pipeline {
         }
         stage('s3 bucket storing') {
             steps {
-               s3Upload(entries: [[bucket: 'samdevvishwa', sourceFile: 'target/addressbook.war', selectedRegion: 'us-east-1']])
+               s3Upload acl: 'Private', bucket: 'samdevvishwa',  file: '/var/lib/jenkins/workspace/declarative pipeline job1.1/target'
             }
         }
     }
