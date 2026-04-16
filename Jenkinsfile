@@ -1,10 +1,9 @@
 pipeline {
     agent any
-
     stages {
         stage('git checkout') {
             steps {
-               git 'https://github.com/samatha-ux/addressbook-v1.git'
+              https://github.com/samatha-ux/addressbook-v1.git
             }
         }
          stage('compilitation the code') {
@@ -30,11 +29,6 @@ pipeline {
         stage('Code coverage') {
             steps {
                 sh 'mvn verify'
-            }
-        }
-        stage('s3 bucket storing') {
-            steps {
-                s3Upload acl: 'Private', bucket: 'declarative1',  file: 'target/*.war'
             }
         }
     }
