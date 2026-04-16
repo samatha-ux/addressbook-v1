@@ -34,7 +34,7 @@ pipeline {
         }
         stage('s3 bucket storing') {
             steps {
-                s3Upload(bucket: 'samdevvishwa', entries: [[sourceFile: 'target/addressbook.war']])
+               s3Upload(entries: [[bucket: 'samdevvishwa', sourceFile: 'target/addressbook.war', selectedRegion: 'us-east-1']])
             }
         }
     }
