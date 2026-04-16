@@ -37,3 +37,5 @@ pipeline {
                 s3Upload(bucket: 'samdevvishwa', entries: [[sourceFile: 'target/addressbook.war']])
             }
         }
+    }
+}
