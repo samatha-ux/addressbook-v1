@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                https://github.com/samatha-ux/addressbook-v1.git
+                // Correct syntax to clone a repository
+                git 'https://github.com/samatha-ux/addressbook-v1.git'
             }
         }
         
@@ -40,10 +41,9 @@ pipeline {
         
         stage('S3 Upload') {
             steps {
-                // Ensure the 'Pipeline: AWS Steps' plugin is installed for s3Upload
-                // 'file' is the path to your artifact relative to the workspace
+                // Requires 'Pipeline: AWS Steps' plugin
                 s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
             }
         }
-    } // Closes stages
-} // Closes pipeline
+    } 
+}
