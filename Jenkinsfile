@@ -33,8 +33,8 @@ pipeline {
         }
         stage('s3 bucket storing') {
             steps {
-               s3Upload(profileName: 's3profile', entries: [[bucket: 'samdevvishwa', sourceFile: 'target/*.war', selectedRegion: 'us-east-1', noUploadOnFailure: true]])
-        }
+              s3Upload(file: 'target/addressbook.war', bucket: 'samdevvishwa', path: 'addressbook.war')
     }
+}
 }
 }
