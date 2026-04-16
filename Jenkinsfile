@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-                git credentialsId: 'adcbec07-694e-432f-a4d6-0592ad377cde', url: 'https://github.com/samatha-ux/addressbook-v1.git'
+               git 'https://github.com/samatha-ux/addressbook-v1.git'
             }
         }
          stage('compilitation the code') {
@@ -29,17 +29,9 @@ pipeline {
         }
         stage('Code coverage') {
             steps {
-                sh 'mvn verify'  
+                sh 'mvn verify'
             }
         }
-        stage('s3 bucket storing') {
-            steps {
-                s3Upload(
-                    bucket: 'declarative1',
-                    file: 'target/addressbook.war',
-                    acl: 'Private'
-                )
-            }
-        }          
+
     }
 }
