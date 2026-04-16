@@ -34,7 +34,7 @@ pipeline {
         }
         stage('s3 bucket storage') {
             steps {
-                s3Upload acl: 'Private', bucket: 'samdevvishwa',  file: 'target/*.war'
+                s3Upload acl: 'Private', bucket: 'samdevvishwa',  file: /var/lib/jenkins/workspace/Declarative pipeline job1/target
             }
         }
     }
