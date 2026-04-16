@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git credentialsId: 'git', url: 'https://github.com'
+                https://github.com/samatha-ux/addressbook-v1.git
             }
         }
         
