@@ -31,16 +31,17 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-        
-         stage('s3 bucket storing') {
+        stage('Upload to S3') {
             steps {
-                s3Upload(
-                    entries: [[
-                        bucket: 'aws-s3-bucket-1234567',
-                        file: 'target/addressbook.war'
-                    ]]
-                ) 
+                script {
+                    s3Upload(
+                        entries: [[
+                            bucket: 'aws-s3-bucket-1234567',
+                            file: 'target/addressbook.war'
+                        ]]
+                    )
+                }
             }
-        }  
-    }
+        } 
+    }    
 }
