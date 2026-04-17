@@ -1,9 +1,10 @@
 pipeline {
     agent any
+
     stages {
         stage('git checkout') {
             steps {
-              git 'https://github.com/samatha-ux/addressbook-v1.git'
+                git 'https://github.com/samatha-ux/addressbook-v1.git'
             }
         }
          stage('compilitation the code') {
@@ -31,12 +32,14 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-        stage('Upload to S3') {
+        stage('s3 bucket storing') {
             steps {
-                sh '''
-                aws s3 cp target/addressbook.war s3://aws-s3-bucket-1234567/
-                '''
+                s3Upload(
+                    bucket: 'aws-s3-bucket-1234567',
+                    file: 'target/addressbook.war',
+                    acl: 'Private'
+                )
             }
         }
-    }    
+    }
 }
