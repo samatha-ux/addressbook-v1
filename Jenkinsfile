@@ -33,14 +33,10 @@ pipeline {
         }
         stage('Upload to S3') {
             steps {
-                withAWS(region: 'ap-south-1') {
-                     s3Upload(
-                        bucket: 'aws-s3-bucket-1234567',
-                        file: 'target/addressbook.war',
-                        path: 'addressbook.war'
-                     )
-                }
+                sh '''
+                aws s3 cp target/addressbook.war s3://aws-s3-bucket-1234567/
+                '''
             }
-        } 
+        }
     }    
 }
