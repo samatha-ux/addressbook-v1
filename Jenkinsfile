@@ -31,10 +31,16 @@ pipeline {
                 sh 'mvn verify'
             }
         }
-        stage('s3 storage') {
+        
+         stage('s3 bucket storing') {
             steps {
-                s3Upload acl: 'Private', bucket: 'aws-s3-bucket-1234567', file: 'target/*.war'
+                s3Upload(
+                    bucket: 'aws-s3-bucket-1234567',
+                    file: 'target/addressbook.war',
+                    acl: 'Private'
+                )
             }
         }
+        
     }
 }
