@@ -35,12 +35,12 @@ pipeline {
          stage('s3 bucket storing') {
             steps {
                 s3Upload(
-                    bucket: 'aws-s3-bucket-1234567',
-                    file: 'target/addressbook.war',
-                    acl: 'Private'
-                )
+                    entries: [[
+                        bucket: 'aws-s3-bucket-1234567',
+                        file: 'target/addressbook.war'
+                    ]]
+                ) 
             }
-        }
-        
+        }  
     }
 }
