@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('git checkout') {
             steps {
-              https://github.com/samatha-ux/addressbook-v1.git
+              git 'https://github.com/samatha-ux/addressbook-v1.git'
             }
         }
          stage('compilitation the code') {
